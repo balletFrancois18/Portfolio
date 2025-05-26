@@ -14,4 +14,24 @@ lien du Repo github du projet (ma branche) : https://github.com/DimancheHugo/Cry
 
 Description : Creation d'une IHM permettant de crypter et decrypter les fichiers via une méthode de Cryptage/Décryptage
 
-Technologies : Github,VSCode,Python,
+Technologies : Github,VSCode,Keepass
+
+Durée : 2 Mois
+
+
+Projet 2 : Easy Portal
+
+lien du Repo github du projet (ma branche) : https://github.com/JR-CIEL-2-PROJETS/25-easyportal/tree/Francois
+
+Description : Conception d'un systeme de détection de Plaque sécuriser pour ouvrir le portail du Parking du lycée
+
+Technologies : Github,VSCode,MySQLWorkbench,Postman,Android Studio,Rasberry pi
+
+Durée : 6 Mois
+
+# Compétences :
+
+Languages de Programmation : HTML, CSS, JavaScript, PHP 
+
+Outils : Git, Docker, Docker-compose 
+
