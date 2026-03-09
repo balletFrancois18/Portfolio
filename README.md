@@ -30,7 +30,7 @@ Durée : 6 Mois
 
 # Projet 3 : Ultimate Morpion Manga
 
-lien du Repo github du projet (ma branche) : https://github.com/balletFrancois18/Projet-IHM-MORPION.git
+lien du Repo github du projet (ma branche) : https://github.com/balletFrancois18/Projet-IHM-MORPION/tree/Fran%C3%A7ois
 
 Description : Création d'un jeu de morpion a thème Manga avec mécanique
 
