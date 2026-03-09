@@ -11,31 +11,27 @@ Je suis en capacités de repondre aux besoins des clients et des entreprise à l
 
 # Projets : 
 
-Projet 1 : Application de Cryptage/Décryptage de ficher 
+# Projet 1 : Application de Cryptage/Décryptage de ficher 
 
 lien du Repo github du projet : https://github.com/DimancheHugo/Cryptage/tree/fran%C3%A7ois
 
 Description : Creation d'une IHM permettant de crypter et decrypter les fichiers via une méthode de Cryptage/Décryptage
 
-Technologies : Github,VSCode,Keepass
-
 Durée : 2 Mois
 
 
-Projet 2 : Easy Portal
+# Projet 2 : Easy Portal
 
 lien du Repo github du projet (ma branche) : https://github.com/JR-CIEL-2-PROJETS/25-easyportal/tree/Francois
 
 Description : Conception d'un systeme de détection de Plaque sécuriser pour ouvrir le portail du Parking du lycée
 
-Technologies : Github,VSCode,MySQLWorkbench,Postman,Android Studio,Rasberry pi
-
 Durée : 6 Mois
 
-# Compétences :
+# Projet 3 : Ultimate Morpion Manga
 
-Languages de Programmation : HTML, CSS, JavaScript, PHP 
+lien du Repo github du projet (ma branche) : https://github.com/balletFrancois18/Projet-IHM-MORPION.git
 
-Outils : Git, Docker, Docker-compose 
+Description : Création d'un jeu de morpion a thème Manga avec mécanique
 
-Projet 3 : ? (A la recherche d'une entreprise)
+Durée : >= 1 mois
