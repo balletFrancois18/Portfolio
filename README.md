@@ -11,7 +11,7 @@ Je suis en capacités de repondre aux besoins des clients et des entreprise à l
 
 # Projets : 
 
-# Projet 1 : Application de Cryptage/Décryptage de ficher 
+# Projet 1 : Application de Cryptage/Décryptage de ficher (2024)
 
 lien du Repo github du projet : https://github.com/DimancheHugo/Cryptage/tree/fran%C3%A7ois
 
@@ -20,7 +20,7 @@ Description : Creation d'une IHM permettant de crypter et decrypter les fichiers
 Durée : 2 Mois
 
 
-# Projet 2 : Easy Portal
+# Projet 2 : Easy Portal (2025)
 
 lien du Repo github du projet (ma branche) : https://github.com/JR-CIEL-2-PROJETS/25-easyportal/tree/Francois
 
@@ -28,7 +28,7 @@ Description : Conception d'un systeme de détection de Plaque sécuriser pour ou
 
 Durée : 6 Mois
 
-# Projet 3 : Ultimate Morpion Manga
+# Projet 3 : Ultimate Morpion Manga (2026)
 
 lien du Repo github du projet (ma branche) : https://github.com/balletFrancois18/Projet-IHM-MORPION/tree/Fran%C3%A7ois
 
