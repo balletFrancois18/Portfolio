@@ -731,16 +731,97 @@
     this.history = newHistory;
   };
 
+  /** Formate les réponses sous forme de texte clair pour Web3Forms */
+  function formatAnswersSummary(answers) {
+    var labels = {
+      r_purpose: 'Objectif de la visite',
+      r_company: 'Entreprise',
+      r_sector: 'Secteur d\'activité',
+      r_school_name: 'École',
+      r_master_program: 'Programme Master',
+      r_school_location: 'Campus / Ville',
+      r_school_note: 'Infos Admission',
+      r_contract_type: 'Type de contrat',
+      r_rhythm: 'Rythme d\'alternance',
+      r_start_date: 'Date de début',
+      r_profile: 'Profil(s) recherché(s)',
+      r_mission: 'Description de la mission',
+      r_contact_name: 'Nom du contact',
+      r_contact_email: 'Email',
+      r_contact_phone: 'Téléphone'
+    };
+
+    var lines = ['=== RÉCAPITULATIF DES RÉPONSES ===\n'];
+    for (var key in answers) {
+      if (Object.prototype.hasOwnProperty.call(answers, key)) {
+        var label = labels[key] || key;
+        var val = answers[key];
+        if (Array.isArray(val)) val = val.join(', ');
+        lines.push(label + ' : ' + (val || 'Non renseigné'));
+      }
+    }
+    return lines.join('\n');
+  }
+
   /* -------------------------------------------------------
-     ENVOI AU BACKEND
+     ENVOI AU BACKEND (Web3Forms API + Fallback PHP)
      ------------------------------------------------------- */
   CadrageBot.prototype.submitToBackend = function () {
     var self = this;
     var sendBtn = document.getElementById('cadrage-send');
-    sendBtn.disabled = true;
-    sendBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> ENVOI EN COURS...';
+    if (sendBtn) {
+      sendBtn.disabled = true;
+      sendBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> ENVOI EN COURS...';
+    }
 
     // Récupération du honeypot
+    var honeypot = document.getElementById('cadrage-honeypot');
+    if (honeypot && honeypot.value) {
+      self.clearProgress();
+      self.showSuccess();
+      return;
+    }
+
+    var contactName = this.answers.r_contact_name || this.answers.r_company || 'Visiteur Portfolio';
+    var contactEmail = this.answers.r_contact_email || '';
+
+    var web3Payload = {
+      access_key: '79ee64ea-d1d6-4605-abab-6cf541df64fd',
+      subject: this.mode === 'recruiter' 
+        ? '🎯 OFFRE RECRUTEUR — ' + (this.answers.r_company || this.answers.r_school_name || contactName)
+        : '💬 DEMANDE DE CADRAGE — François Ballet Portfolio',
+      from_name: 'Terminal Portfolio François Ballet',
+      name: contactName,
+      email: contactEmail || 'no-reply@francois-ballet.fr',
+      message: formatAnswersSummary(this.answers)
+    };
+
+    // Envoi direct via Web3Forms API vers Gmail
+    fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      headers: { 
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify(web3Payload)
+    })
+    .then(function (response) { return response.json(); })
+    .then(function (data) {
+      if (data.success) {
+        self.clearProgress();
+        self.showSuccess(false);
+      } else {
+        self.submitToPHP(sendBtn);
+      }
+    })
+    .catch(function () {
+      self.submitToPHP(sendBtn);
+    });
+  };
+
+  /** Envoi de secours PHP si disponible */
+  CadrageBot.prototype.submitToPHP = function (sendBtn) {
+    var self = this;
     var honeypot = document.getElementById('cadrage-honeypot');
     var honeypotValue = honeypot ? honeypot.value : '';
 
@@ -759,16 +840,16 @@
     .then(function (data) {
       if (data.success) {
         self.clearProgress();
-        self.showSuccess();
+        self.showSuccess(false);
       } else {
-        sendBtn.disabled = false;
-        sendBtn.innerHTML = '<i class="fas fa-paper-plane"></i> ENVOYER MA DEMANDE';
+        if (sendBtn) {
+          sendBtn.disabled = false;
+          sendBtn.innerHTML = '<i class="fas fa-paper-plane"></i> ENVOYER MA DEMANDE';
+        }
         self.showError(data.error || 'Erreur inconnue. Veuillez réessayer.');
       }
     })
     .catch(function () {
-      // En cas d'erreur réseau (pas de backend PHP disponible),
-      // on propose quand même le téléchargement
       self.clearProgress();
       self.showSuccess(true);
     });
