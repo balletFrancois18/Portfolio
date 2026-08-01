@@ -8,7 +8,7 @@ const EXPERIENCE = [
     place: 'CFA CNAM',
     type: 'formation',
     description: 'Gestion de projet, développement, sécurité et exploitation de systèmes informatiques.',
-    status: 'Diplômé'
+    status: 'En cours d\'obtention'
   },
   {
     year: '2025',
