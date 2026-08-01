@@ -83,7 +83,7 @@
     // 5. Load GLB Model
     const gltfLoader = new THREE.GLTFLoader();
     gltfLoader.load(
-      'Images/model.glb',
+      'images/model.glb',
       (gltf) => {
         avatarModel = gltf.scene;
         
