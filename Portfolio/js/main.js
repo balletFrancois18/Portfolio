@@ -40,6 +40,65 @@
   });
 
   /* -------------------------------------------------------
+     FULLSCREEN TYPE-SHUFFLE PRELOADER CONTROLLER
+     ------------------------------------------------------- */
+  const preloader = document.getElementById('site-preloader');
+  const preloaderTitle = document.getElementById('preloader-title');
+  const preloaderBar = document.getElementById('preloader-bar');
+  const preloaderStatus = document.getElementById('preloader-status');
+
+  let preloaderTS = null;
+  let preloaderInterval = null;
+  let isPreloaderFinished = false;
+
+  if (preloaderTitle && typeof TypeShuffle !== 'undefined') {
+    preloaderTS = new TypeShuffle(preloaderTitle);
+    preloaderTS.trigger('fx6');
+
+    // Re-trigger FX6 animation every 1.5 seconds during loading
+    preloaderInterval = setInterval(() => {
+      if (!isPreloaderFinished && preloaderTS) {
+        preloaderTS.trigger('fx6');
+      }
+    }, 1500);
+  }
+
+  function updatePreloader(percent, text) {
+    if (preloaderBar) preloaderBar.style.width = Math.min(percent, 100) + '%';
+    if (preloaderStatus) preloaderStatus.innerText = text || `CHARGEMENT MODÈLE 3D... ${percent}%`;
+  }
+
+  function hidePreloader() {
+    if (isPreloaderFinished) return;
+    isPreloaderFinished = true;
+
+    if (preloaderInterval) clearInterval(preloaderInterval);
+    updatePreloader(100, 'SYSTÈME CHARGÉ À 100%');
+
+    if (preloaderTS) preloaderTS.trigger('fx6');
+
+    setTimeout(() => {
+      if (preloader) {
+        gsap.to(preloader, {
+          opacity: 0,
+          duration: 0.7,
+          ease: 'power2.inOut',
+          onComplete: () => {
+            preloader.style.display = 'none';
+            // Trigger hero content animation after preloader closes
+            typeshuffles.forEach(ts => ts.trigger('fx6'));
+          }
+        });
+      }
+    }, 500);
+  }
+
+  // Safety fallback: dismiss preloader after 5.5s maximum even if network lags
+  setTimeout(() => {
+    hidePreloader();
+  }, 5500);
+
+  /* -------------------------------------------------------
      3D AVATAR (Three.js) & PARALLAX TILT CARD
      ------------------------------------------------------- */
   const tiltCard = document.getElementById('tilt-card');
@@ -102,8 +161,9 @@
         
         scene.add(avatarModel);
 
-        // Hide loader
+        // Hide local loader & dismiss full preloader
         if (loader) loader.style.display = 'none';
+        hidePreloader();
 
         // Play Animation
         if (gltf.animations && gltf.animations.length > 0) {
@@ -114,14 +174,22 @@
       },
       (xhr) => {
         // Progress
-        if (loader) {
+        if (xhr.total > 0) {
           const percent = Math.round((xhr.loaded / xhr.total) * 100);
-          if(percent) loader.innerText = `CHARGEMENT... ${percent}%`;
+          if (percent) {
+            updatePreloader(percent, `CHARGEMENT MODÈLE 3D... ${percent}%`);
+            if (loader) loader.innerText = `CHARGEMENT... ${percent}%`;
+          }
+        } else {
+          // If total bytes unknown, estimate based on loaded bytes (~13.7MB)
+          const estimatedMB = (xhr.loaded / (1024 * 1024)).toFixed(1);
+          updatePreloader(Math.min(Math.round((xhr.loaded / 13773372) * 100), 99), `CHARGEMENT 3D... ${estimatedMB} MB`);
         }
       },
       (error) => {
         console.error('Erreur chargement modèle 3D:', error);
         if (loader) loader.innerText = "ERREUR DE CHARGEMENT";
+        hidePreloader();
       }
     );
 
