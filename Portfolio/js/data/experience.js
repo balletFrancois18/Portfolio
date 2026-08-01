@@ -22,7 +22,8 @@ const EXPERIENCE = [
     title: 'BTS CIEL — Option A : Cybersécurité',
     place: 'Systèmes & Réseaux',
     type: 'formation',
-    description: 'Maîtrise systèmes et réseaux approfondie. Langages front/backend. Cybersécurité appliquée.'
+    description: 'Maîtrise systèmes et réseaux approfondie. Langages front/backend. Cybersécurité appliquée.',
+    status: 'Diplômé'
   },
   {
     year: '2024',
@@ -36,7 +37,8 @@ const EXPERIENCE = [
     title: 'Bac Pro Systèmes Numériques — Réseaux',
     place: '',
     type: 'formation',
-    description: 'Câblage réseau, systèmes, bases du développement web.'
+    description: 'Câblage réseau, systèmes, bases du développement web.',
+    status: 'Diplômé'
   },
   {
     year: '2022',
@@ -50,6 +52,7 @@ const EXPERIENCE = [
     title: 'Brevet des Collèges — Mention Bien',
     place: '',
     type: 'formation',
-    description: ''
+    description: 'Diplôme National du Brevet',
+    status: 'Mention Bien'
   }
 ];
