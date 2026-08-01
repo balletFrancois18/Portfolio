@@ -106,7 +106,8 @@ class Cell {
     this.DOM.el = domEl;
     this.original = this.DOM.el.innerHTML;
     this.state = this.original;
-    this.color = this.originalColor = getComputedStyle(document.documentElement).getPropertyValue('--color-text') || '#ffffff';
+    const computedColor = window.getComputedStyle(this.DOM.el).color;
+    this.color = this.originalColor = (computedColor && computedColor !== 'rgba(0, 0, 0, 0)') ? computedColor : (getComputedStyle(document.documentElement).getPropertyValue('--color-text') || '#ffffff');
     this.position = position;
     this.previousCellPosition = previousCellPosition;
   }
@@ -285,7 +286,7 @@ class TypeShuffle {
         }
       } else {
         cell.set(this.getRandomChar());
-        cell.color = ['#333333', '#ffffff', '#00ccaa'][Math.floor(Math.random() * 3)];
+        cell.color = ['#00ff66', '#00cc44', '#33ff99', '#ffffff', '#008833'][Math.floor(Math.random() * 5)];
         cell.DOM.el.style.color = cell.color;
       }
       
